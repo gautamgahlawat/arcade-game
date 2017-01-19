@@ -1,10 +1,4 @@
-var platformBounds = {
-        left: 0,
-        right: 404,
-        up: -23,
-        down: 390
-    },
-    keyIsDown = {
+var keyIsDown = {
         37: false,
         38: false,
         39: false,
@@ -12,7 +6,7 @@ var platformBounds = {
     };
 
 // Enemies our player must avoid
-var Enemy = function(x, y, speed) {
+var Enemy = function(x, y, speed,height, width) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -22,7 +16,7 @@ var Enemy = function(x, y, speed) {
     this.y = y;
     this.width = 90;
     this.height = 70;
-    this.speed = 500;
+    this.speed = getRandomArbitrary(1, 4) * 120;
 
     this.sprite = 'images/enemy-bug.png';
 
@@ -34,11 +28,25 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = this.x + Math.random() * this.speed * dt;
-    if (this.x > 490) {
+    this.x += this.speed * dt;
+
+    //A new bug comes everytime existing bug runs out of sight
+    if (this.x >= 520) {
         this.x = 0;
     }
 };
+
+// Returns a random number between min (inclusive) and max (exclusive)
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+// Returns a random integer between min (included) and max (included)
+// Using Math.round() will give you a non-uniform distribution!
+function getRandomIntInclusive(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -48,22 +56,23 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function(){
-    this.x = 200;
-    this.y = 390;
+var Player = function(x, y , height, width, speed){
+    this.x = x;
+    this.y = y;
     this.width = 75;
     this.height = 85;
     this.speed = 50;
 
     this.sprite = 'images/char-boy.png';
+    this.platformBounds = {
+        left: 0,
+        right: 404,
+        up: -23,
+        down: 390
+    }
 }
 
-//function to move player back to its initial position
-Player.prototype.reset = function() {
-    this.x = 200;
-    this.y = 400;
-    //ctx.clearRect(10,30,300,150);
-}
+
 
 // Draws the player on the screen, as required
 Player.prototype.render = function() {
@@ -72,14 +81,55 @@ Player.prototype.render = function() {
 
 //update the player's position
 Player.prototype.update = function(dt) {
-    if (this.y === -23) {
-        collisionWithWater = true;
-        collisionCoordinates.push({x: this.x+12, y: this.y+120});
-        this.x = 202;
-        this.y = 392;
+    // if (this.y === -23) {
+    //     collisionWithWater = true;
+    //     collisionCoordinates.push({x: this.x+12, y: this.y+120});
+    //     this.x = 202;
+    //     this.y = 392;
+    // }
+
+    if (this.x < 0 || this.x > 400) {
+        if (this.x < 0) {
+            this.x = 0;
+
+        } else {
+            this.x = 400;
+        }
+    }
+    if (this.y < 0 || this.y > 400) {
+
+        if (this.y < 0) {
+           this.y=0;
+
+        } else {
+            this.y = 400;
+        }
+    }
+
+    this.checkCollisions();
+};
+
+//collision checking function
+//comparing the player location,width and height with enemy and checks if there is a collision
+//reset if there is collision
+Player.prototype.checkCollisions = function() {
+
+    for (var i = 0; i < allEnemies.length; i++) {
+        if ((this.x < allEnemies[i].x + allEnemies[i].width) && (this.x + this.width > allEnemies[i].x) && (this.y < allEnemies[i].y + allEnemies[i].height) && (this.height + this.y > allEnemies[i].y)) {
+            console.log("Collision!");
+
+            this.reset();
+        }
+
     }
 };
 
+//function to move player back to its initial position
+Player.prototype.reset = function() {
+    this.x = 200;
+    this.y = 390;
+    //ctx.clearRect(10,30,300,150);
+}
 
 Player.prototype.handleInput = function(direction) {
     // switch (key) {
@@ -198,7 +248,7 @@ var enemy3 = new Enemy(0,210);
 var enemy4 = new Enemy(0,210);
 
 var allEnemies = [enemy1, enemy2, enemy3, enemy4];
-var player = new Player();
+var player = new Player(200, 390);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
