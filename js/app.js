@@ -22,7 +22,7 @@ var Enemy = function(x, y, speed) {
     this.y = y;
     this.width = 90;
     this.height = 70;
-    this.speed = 200;
+    this.speed = 500;
 
     this.sprite = 'images/enemy-bug.png';
 
@@ -132,26 +132,25 @@ Player.prototype.handleInput = function(direction) {
 
     // }
 
-    if (direction === 'up') {
-        if (this.y ===  0) {
-            this.y = 0;
-            //console.log('You Won!');
-            var c=document.getElementById('myCanvas');
-            var ctx=document.getElementById('myCanvas').getContext('2d');
-            ctx.font='40px Georgia';
-            var gradient=ctx.createLinearGradient(0,0,document.getElementById('myCanvas').width,0);
-            gradient.addColorStop("0","magenta");
-            gradient.addColorStop("0.5","blue");
-            gradient.addColorStop("1.0","red");
-            // Fill with gradient
-            ctx.fillStyle=gradient;
-            ctx.drawImage(Resources.get(this.win), 10, 10);
-            ctx.drawImage(Resources.get(this.sprite), 80, 10);
-            ctx.drawImage(Resources.get(this.win), 150, 10);
-            ctx.fillText("You Won! :) ",40,30);
-            player.reset();
-
-        }
+if (direction === 'up') {
+    if (this.y ===  0) {
+        this.y = 0;
+        //console.log('You Won!');
+        //var c=document.getElementById('myCanvas');
+        var ctx=document.getElementById('myCanvas').getContext('2d');
+        ctx.font='40px Georgia';
+        var gradient=ctx.createLinearGradient(0,0,document.getElementById('myCanvas').width,0);
+        gradient.addColorStop("0","magenta");
+        gradient.addColorStop("0.5","blue");
+        gradient.addColorStop("1.0","red");
+        // Fill with gradient
+        ctx.fillStyle=gradient;
+        // ctx.drawImage(Resources.get(this.win), 10, 10);
+        // ctx.drawImage(Resources.get(this.sprite), 80, 10);
+        // ctx.drawImage(Resources.get(this.win), 150, 10);
+        ctx.fillText("You Won! :) ",40,30);
+        player.reset();
+    }
 
         else {
         this.y -= 80;
