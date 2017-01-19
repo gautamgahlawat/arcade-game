@@ -14,9 +14,9 @@ var Enemy = function(x, y, speed,height, width) {
     // a helper we've provided to easily load images
     this.x = x;
     this.y = y;
-    this.width = 90;
-    this.height = 70;
-    this.speed = getRandomArbitrary(1, 4) * 120;
+    this.width = 70;
+    this.height = 50;
+    this.speed = getRandomArbitrary(1, 4) * 100;
 
     this.sprite = 'images/enemy-bug.png';
 
@@ -59,8 +59,8 @@ Enemy.prototype.render = function() {
 var Player = function(x, y , height, width, speed){
     this.x = x;
     this.y = y;
-    this.width = 75;
-    this.height = 85;
+    this.width = 65;
+    this.height = 75;
     this.speed = 50;
 
     this.sprite = 'images/char-boy.png';
