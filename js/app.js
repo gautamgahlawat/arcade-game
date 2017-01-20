@@ -1,3 +1,8 @@
+// Boolean values for updating the score.
+var up = false;
+var collide = false;
+var hasGem = false;
+
 var keyIsDown = {
         37: false,
         38: false,
@@ -63,20 +68,18 @@ var Player = function(x, y , height, width, speed){
     this.height = 75;
     this.speed = 50;
 
+    this.score =0;
+
     this.sprite = 'images/char-boy.png';
-    this.platformBounds = {
-        left: 0,
-        right: 404,
-        up: -23,
-        down: 390
-    }
 }
-
-
 
 // Draws the player on the screen, as required
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    ctx.font = '30pt Courier New';
+    ctx.fillStyle = "grey";
+    ctx.fillText('Score' + ' ' + this.score, 0, 30);
 };
 
 //update the player's position
@@ -106,6 +109,11 @@ Player.prototype.update = function(dt) {
         }
     }
 
+    if (this.y <= 0) {
+            this.reset();
+            console.log("Water Collision!");
+        }
+
     this.checkCollisions();
 };
 
@@ -132,35 +140,6 @@ Player.prototype.reset = function() {
 }
 
 Player.prototype.handleInput = function(direction) {
-    // switch (key) {
-    //     case 'left':
-    //         if (this.x > platformBounds.left && keyIsDown['37'] === false && gameHasStarted) {
-    //             this.x -= 101;
-    //             keyIsDown['37'] = true;
-    //         }
-    //         break;
-    //     case 'up':
-    //         if (this.y > platformBounds.up && keyIsDown['38'] === false && gameHasStarted) {
-    //             this.y -= 83;
-    //             keyIsDown['38'] = true;
-    //         }
-    //         break;
-    //     case 'right':
-    //         if (this.x < platformBounds.right && keyIsDown['39'] === false && gameHasStarted) {
-    //             this.x += 101;
-    //             keyIsDown['39'] = true;
-    //         }
-    //         break;
-    //     case 'down':
-    //         if (this.y < platformBounds.down && keyIsDown['40'] === false && gameHasStarted) {
-    //             this.y += 83;
-    //             keyIsDown['40'] = true;
-    //         }
-    //         break;
-    //     default:
-    // }
-
-
     // if (direction === 'left' && this.x > 0) {
     //     this.x -= 100;
     // }
@@ -242,10 +221,10 @@ if (direction === 'up') {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var enemy1 = new Enemy(0,50);
-var enemy2 = new Enemy(0,130);
-var enemy3 = new Enemy(0,210);
-var enemy4 = new Enemy(0,210);
+var enemy1 = new Enemy(0,70);
+var enemy2 = new Enemy(0,150);
+var enemy3 = new Enemy(0,230);
+var enemy4 = new Enemy(0,230);
 
 var allEnemies = [enemy1, enemy2, enemy3, enemy4];
 var player = new Player(200, 390);
