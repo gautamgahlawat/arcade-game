@@ -79,7 +79,7 @@ Player.prototype.render = function() {
 
     ctx.font = '30pt Courier New';
     ctx.fillStyle = "grey";
-    ctx.fillText('Score' + ' ' + this.score, 0, 30);
+    ctx.fillText('Score' + ' ' +this.score, 0, 30);
 };
 
 //update the player's position
@@ -109,8 +109,11 @@ Player.prototype.update = function(dt) {
         }
     }
 
+// for water collision
     if (this.y <= 0) {
             this.reset();
+            collide = true;
+            player.updateScore();
             console.log("Water Collision!");
         }
 
@@ -214,9 +217,49 @@ if (direction === 'up') {
         this.x -= 100;
         }
     }
-
-
 };
+
+
+// Updates the score.
+Player.prototype.updateScore = function() {
+    // ctx.clearRect(0, 0, 500, 500);
+    // If the player reaches the water with a gem, update score accordingly.
+    // if (up === true && hasGem === true) {
+    //     this.score += gem.value;
+    //     up = false;
+    //     hasGem = false;
+    //     this.playerReset();
+    //     ctx.clearRect(0, 600, 500, 500);
+    //     gem.setGemLocation();
+    // }
+    // If the player reaches the water without a gem, increase score by 1.
+    // if (up === true) {
+    //     this.score++;
+    //     up = false;
+    //     this.playerReset();
+    // }
+
+        if(collide){
+            this.score +=10;
+            //this.reset();
+        }
+
+    // If player has collision with enemy, reduce score by value of the gem carried.
+    // If not carryin a gem, reduce score by gem value / 2.
+    // if (collide === true) {
+    //     if (hasGem === true) {
+    //         ctx.clearRect(0, 600, 500, 500);
+    //         this.score -= gem.value;
+    //         hasGem = false;
+    //     } else {
+    //         this.score -= gem.value / 2;
+    //     }
+    //     collide = false;
+    //     gem.setGemLocation();
+    //     this.playerReset();
+    // }
+};
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
