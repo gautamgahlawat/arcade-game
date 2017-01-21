@@ -7,9 +7,9 @@ This game consists of a player and many enemy bugs. The goal of the game is to m
 
 - Download all the files from [here](https://github.com/gautamgahlawat/arcade-game/archive/master.zip)
 - Unzip the file and open index.html in your browser
-- try the LIVE version [here](https://gautamgahlawat.github.io/arcade-game/)
+- Try the LIVE version [here](https://gautamgahlawat.github.io/arcade-game/)
 
-### OR
+ OR
 
 - Press the clone button and copy the link to the clipboard
 - Open the terminal and write command `cd /usr/name-of-folder` to select the directory
@@ -34,4 +34,5 @@ This game consists of a player and many enemy bugs. The goal of the game is to m
 ## License
 
 Change whatever and do whatever you want with it. Make it your own. :)
+
 Licensed under MIT License detail [here](https://github.com/gautamgahlawat/arcade-game/blob/master/LICENSE)
