@@ -60,6 +60,7 @@ Player.prototype.render = function() {
 //update the player's position
 Player.prototype.update = function(dt) {
 
+//Boundry conditions
     if (this.x < 0 || this.x > 400) {
         if (this.x < 0) {
             this.x = 0;
@@ -78,7 +79,7 @@ Player.prototype.update = function(dt) {
         }
     }
 
-    // for water collision
+// for water collision
     if (this.y <= 0) {
         this.reset();
         collide = true;
@@ -90,8 +91,8 @@ Player.prototype.update = function(dt) {
 };
 
 //collision checking function
-//comparing the player location,width and height with enemy and checks if there is a collision
-//reset if there is collision
+//compare the player location,width and height with enemy and checks if there is a collision
+//reset player if there is collision
 Player.prototype.checkCollisions = function() {
 
     for (var i = 0; i < allEnemies.length; i++) {
@@ -100,7 +101,6 @@ Player.prototype.checkCollisions = function() {
 
             this.reset();
         }
-
     }
 };
 
