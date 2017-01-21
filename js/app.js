@@ -1,15 +1,3 @@
-// Boolean values for updating the score.
-var up = false;
-var collide = false;
-var hasGem = false;
-
-var keyIsDown = {
-        37: false,
-        38: false,
-        39: false,
-        40: false
-    };
-
 // Enemies our player must avoid
 var Enemy = function(x, y, speed,height, width) {
     // Variables applied to each of our instances go here,
@@ -24,7 +12,6 @@ var Enemy = function(x, y, speed,height, width) {
     this.speed = getRandomArbitrary(1, 4) * 100;
 
     this.sprite = 'images/enemy-bug.png';
-
 };
 
 // Update the enemy's position, required method for game
@@ -46,13 +33,6 @@ function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-// Returns a random integer between min (included) and max (included)
-// Using Math.round() will give you a non-uniform distribution!
-function getRandomIntInclusive(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -68,8 +48,6 @@ var Player = function(x, y , height, width, speed){
     this.height = 75;
     this.speed = 50;
 
-    this.score =0;
-
     this.sprite = 'images/char-boy.png';
 }
 
@@ -77,19 +55,10 @@ var Player = function(x, y , height, width, speed){
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
-    ctx.font = '30pt Courier New';
-    ctx.fillStyle = "grey";
-    ctx.fillText('Score' + ' ' +this.score, 0, 30);
 };
 
 //update the player's position
 Player.prototype.update = function(dt) {
-    // if (this.y === -23) {
-    //     collisionWithWater = true;
-    //     collisionCoordinates.push({x: this.x+12, y: this.y+120});
-    //     this.x = 202;
-    //     this.y = 392;
-    // }
 
     if (this.x < 0 || this.x > 400) {
         if (this.x < 0) {
@@ -111,13 +80,13 @@ Player.prototype.update = function(dt) {
 
 // for water collision
     if (this.y <= 0) {
-            this.reset();
-            collide = true;
-            player.updateScore();
-            console.log("Water Collision!");
-        }
+        this.reset();
+        collide = true;
+        console.log("Water Collision!");
+    }
 
     this.checkCollisions();
+
 };
 
 //collision checking function
@@ -139,127 +108,26 @@ Player.prototype.checkCollisions = function() {
 Player.prototype.reset = function() {
     this.x = 200;
     this.y = 390;
-    //ctx.clearRect(10,30,300,150);
 }
 
 Player.prototype.handleInput = function(direction) {
-    // if (direction === 'left' && this.x > 0) {
-    //     this.x -= 100;
-    // }
-    // if (direction === 'up' && this.y > 0) {
-    //     this.y -= 80;
-
-
-
-    // }
-
-    // if (direction === 'right' && this.x < 400) {
-    //     this.x += 100;
-    // }
-
-
-
-    // if (direction === 'down' && this.y < 400) {
-    //     this.y += 100;
-
-    // }
-
-if (direction === 'up') {
-    if (this.y ===  0) {
-        this.y = 0;
-        //console.log('You Won!');
-        //var c=document.getElementById('myCanvas');
-        var ctx=document.getElementById('myCanvas').getContext('2d');
-        ctx.font='40px Georgia';
-        var gradient=ctx.createLinearGradient(0,0,document.getElementById('myCanvas').width,0);
-        gradient.addColorStop("0","magenta");
-        gradient.addColorStop("0.5","blue");
-        gradient.addColorStop("1.0","red");
-        // Fill with gradient
-        ctx.fillStyle=gradient;
-        // ctx.drawImage(Resources.get(this.win), 10, 10);
-        // ctx.drawImage(Resources.get(this.sprite), 80, 10);
-        // ctx.drawImage(Resources.get(this.win), 150, 10);
-        ctx.fillText("You Won! :) ",40,30);
-        player.reset();
+    if (direction === 'left' && this.x > 0) {
+        this.x -= 100;
     }
 
-        else {
+    if (direction === 'up' && this.y > 0) {
         this.y -= 80;
     }
-}
 
-
-    if (direction === 'down') {
-        if (this.y === 400) {
-            this.y = 400;
-        }
-        else {
-        this.y += 80;
-        }
+    if (direction === 'right' && this.x < 400) {
+        this.x += 100;
     }
 
-    if (direction === 'right') {
-
-        if (this.x === 400 && (this.y === 400 || this.y === 320 || this.y === 240 || this.y === 160 ||this.y === 80  || this.y === 0 )) {
-            this.x= 400;
-        }
-        else {
-            this.x += 100 ;
-        }
+    if (direction === 'down' && this.y < 400) {
+        this.y += 100;
     }
 
-    if (direction === 'left') {
-        if (this.x === 0 && (this.y === 400 || this.y === 320 || this.y === 240 || this.y === 160 || this.y === 80 || this.y === 0 )){
-            this.x = 0;
-        }
-        else {
-        this.x -= 100;
-        }
-    }
 };
-
-
-// Updates the score.
-Player.prototype.updateScore = function() {
-    // ctx.clearRect(0, 0, 500, 500);
-    // If the player reaches the water with a gem, update score accordingly.
-    // if (up === true && hasGem === true) {
-    //     this.score += gem.value;
-    //     up = false;
-    //     hasGem = false;
-    //     this.playerReset();
-    //     ctx.clearRect(0, 600, 500, 500);
-    //     gem.setGemLocation();
-    // }
-    // If the player reaches the water without a gem, increase score by 1.
-    // if (up === true) {
-    //     this.score++;
-    //     up = false;
-    //     this.playerReset();
-    // }
-
-        if(collide){
-            this.score +=10;
-            //this.reset();
-        }
-
-    // If player has collision with enemy, reduce score by value of the gem carried.
-    // If not carryin a gem, reduce score by gem value / 2.
-    // if (collide === true) {
-    //     if (hasGem === true) {
-    //         ctx.clearRect(0, 600, 500, 500);
-    //         this.score -= gem.value;
-    //         hasGem = false;
-    //     } else {
-    //         this.score -= gem.value / 2;
-    //     }
-    //     collide = false;
-    //     gem.setGemLocation();
-    //     this.playerReset();
-    // }
-};
-
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -284,8 +152,3 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
-
-// document.addEventListener('keyup', function(e) {
-//     keyIsDown[e.keyCode] = false;
-// });
