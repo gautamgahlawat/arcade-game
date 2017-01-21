@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function(x, y, speed,height, width) {
+var Enemy = function(x, y, speed, height, width) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -30,7 +30,7 @@ Enemy.prototype.update = function(dt) {
 
 // Returns a random number between min (inclusive) and max (exclusive)
 function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
+    return Math.random() * (max - min) + min;
 }
 
 // Draw the enemy on the screen, required method for game
@@ -41,7 +41,7 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function(x, y , height, width, speed){
+var Player = function(x, y, height, width, speed) {
     this.x = x;
     this.y = y;
     this.width = 65;
@@ -49,7 +49,7 @@ var Player = function(x, y , height, width, speed){
     this.speed = 50;
 
     this.sprite = 'images/char-boy.png';
-}
+};
 
 // Draws the player on the screen, as required
 Player.prototype.render = function() {
@@ -71,14 +71,14 @@ Player.prototype.update = function(dt) {
     if (this.y < 0 || this.y > 400) {
 
         if (this.y < 0) {
-           this.y=0;
+            this.y = 0;
 
         } else {
             this.y = 400;
         }
     }
 
-// for water collision
+    // for water collision
     if (this.y <= 0) {
         this.reset();
         collide = true;
@@ -108,7 +108,7 @@ Player.prototype.checkCollisions = function() {
 Player.prototype.reset = function() {
     this.x = 200;
     this.y = 390;
-}
+};
 
 Player.prototype.handleInput = function(direction) {
     if (direction === 'left' && this.x > 0) {
@@ -132,10 +132,10 @@ Player.prototype.handleInput = function(direction) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var enemy1 = new Enemy(0,70);
-var enemy2 = new Enemy(0,150);
-var enemy3 = new Enemy(0,230);
-var enemy4 = new Enemy(0,230);
+var enemy1 = new Enemy(0, 70);
+var enemy2 = new Enemy(0, 150);
+var enemy3 = new Enemy(0, 230);
+var enemy4 = new Enemy(0, 230);
 
 var allEnemies = [enemy1, enemy2, enemy3, enemy4];
 var player = new Player(200, 390);
